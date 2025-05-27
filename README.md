@@ -7,6 +7,6 @@
 
 **4. Make sure that the OS is CentOS or change the download link in the playbook(ie. Docker_installation.yml)**
 
-**5. Run the playbook**
+**5. Run the playbook: **
      ansible-playbook -i hosts.ini Docker_installation.yml
      
