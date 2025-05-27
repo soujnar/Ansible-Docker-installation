@@ -1,0 +1,32 @@
+- name: Docker Installation in multiple VMs
+  hosts: all
+  become: false
+  tasks:
+  - name: Check OS version
+    command: sudo cat /etc/redhat-release
+    register: os_version
+
+  - name: Print OS version
+    debug:
+            msg: "OS version is {{ os_version.stdout }}"
+
+  - name: Download Docker
+    command: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+
+  - name: Extract Docker
+    command: sudo dnf install -y docker-ce docker-ce-cli containerd.io --nobest --allowerasing
+
+  - name: Enable Docker
+    command: sudo systemctl enable --now docker
+
+  - name: Grant permission to the user
+    command: sudo usermod -aG docker $USER
+
+  - name: Docker version
+    command: sudo docker --version
+    register: docker_version
+
+  - name: Print Docker Version
+    debug:
+            msg: "Docker version is {{docker_version.stdout}}"
+
